@@ -312,14 +312,14 @@
       </select>
     </div>
 
-    <button class="btn" id="translateBtn" onclick="translate()">
+    <button class="btn" id="translateBtn">
       ⚔️ Translate, Forsooth!
     </button>
 
     <div class="output-container" id="outputContainer">
       <div class="output-header">
         <span class="output-label">Thy Translation:</span>
-        <button class="copy-btn" onclick="copyToClipboard()">📋 Copy</button>
+        <button class="copy-btn" id="copyBtn">📋 Copy</button>
       </div>
       <div class="output" id="output"></div>
     </div>
@@ -353,11 +353,15 @@
     inputText.addEventListener('keydown', (e) => {
       if (e.key === 'Enter' && (e.ctrlKey || e.metaKey)) {
         e.preventDefault();
-        translate();
+        translateText();
       }
     });
 
-    async function translate() {
+    // Button click handlers
+    translateBtn.addEventListener('click', translateText);
+    document.getElementById('copyBtn').addEventListener('click', copyToClipboard);
+
+    async function translateText() {
       const text = inputText.value.trim();
       
       if (!text) {
