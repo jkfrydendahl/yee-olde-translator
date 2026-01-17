@@ -123,7 +123,7 @@ Returns all available translation styles.
 - [x] Rate limiting & input validation
 - [x] Web UI
 - [x] Copy to clipboard
-- [ ] Translation history (localStorage)
+- [x] Translation history (localStorage)
 - [ ] Share translations
 - [ ] Reverse translation (medieval to modern)
 - [ ] Browser extension

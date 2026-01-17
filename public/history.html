@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>History - Ye Olde Translator</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 36 36'><text x='50%' y='60%' font-size='30' text-anchor='middle' dominant-baseline='middle'>📜</text></svg>">
+    <link rel="stylesheet" href="style.css" />
+    <style>
+      .history-controls {
+        display: flex;
+        gap: 1rem;
+        margin-bottom: 2rem;
+        flex-wrap: wrap;
+      }
+
+      .history-search {
+        flex: 1;
+        min-width: 200px;
+        padding: 0.75rem 1rem;
+        border: 1px solid var(--border);
+        border-radius: var(--radius-sm);
+        font-family: inherit;
+        font-size: 1rem;
+        background: var(--surface);
+        transition: border-color 0.15s, box-shadow 0.15s;
+      }
+
+      .history-search:focus {
+        outline: none;
+        border-color: var(--border-focus);
+        box-shadow: 0 0 0 3px rgba(45, 90, 61, 0.12);
+      }
+
+      .history-filter {
+        min-width: 150px;
+        padding: 0.75rem 2.5rem 0.75rem 1rem;
+        border: 1px solid var(--border);
+        border-radius: var(--radius-sm);
+        background: var(--surface) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%235A6B5E' d='M2 4l4 4 4-4'/%3E%3C/svg%3E") no-repeat right 1rem center;
+        font-size: 1rem;
+        font-family: inherit;
+        color: var(--text);
+        cursor: pointer;
+        transition: border-color 0.15s;
+        appearance: none;
+        -webkit-appearance: none;
+        -moz-appearance: none;
+      }
+
+      .history-filter:focus {
+        outline: none;
+        border-color: var(--border-focus);
+        box-shadow: 0 0 0 3px rgba(45, 90, 61, 0.12);
+      }
+
+      .history-stats {
+        text-align: center;
+        color: var(--text-muted);
+        margin-bottom: 1.5rem;
+        font-size: 0.9rem;
+      }
+
+      .history-item {
+        background: var(--background);
+        border: 1px solid var(--border);
+        border-radius: var(--radius-sm);
+        padding: 1.25rem;
+        margin-bottom: 1rem;
+        transition: border-color 0.15s;
+      }
+
+      .history-item:hover {
+        border-color: var(--primary);
+      }
+
+      .history-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 0.75rem;
+      }
+
+      .history-type {
+        font-weight: 600;
+        color: var(--primary);
+        font-size: 1rem;
+      }
+
+      .history-timestamp {
+        color: var(--text-muted);
+        font-size: 0.85rem;
+      }
+
+      .history-parameters {
+        color: var(--text-muted);
+        font-size: 0.85rem;
+        margin-bottom: 0.75rem;
+        font-style: italic;
+      }
+
+      .history-content {
+        background: var(--surface);
+        padding: 1rem;
+        border-radius: var(--radius-sm);
+        margin-bottom: 0.75rem;
+        white-space: pre-wrap;
+        font-size: 0.9rem;
+        max-height: 200px;
+        overflow: hidden;
+        position: relative;
+        line-height: 1.6;
+      }
+
+      .history-content.expanded {
+        max-height: none;
+      }
+
+      .history-content::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        height: 40px;
+        background: linear-gradient(transparent, var(--surface));
+        pointer-events: none;
+      }
+
+      .history-content.expanded::after {
+        display: none;
+      }
+
+      .history-actions {
+        display: flex;
+        gap: 0.5rem;
+      }
+
+      .history-btn {
+        padding: 0.4rem 0.8rem;
+        font-size: 0.85rem;
+        border: 1px solid var(--border);
+        background: var(--surface);
+        border-radius: var(--radius-sm);
+        cursor: pointer;
+        transition: all 0.15s;
+        font-family: inherit;
+      }
+
+      .history-btn:hover {
+        border-color: var(--primary);
+        color: var(--primary);
+      }
+
+      .history-btn.danger:hover {
+        border-color: var(--error);
+        color: var(--error);
+      }
+
+      .clear-all-btn {
+        background: var(--error);
+        color: white;
+        border: none;
+      }
+
+      .clear-all-btn:hover {
+        background: #7f1d1d;
+        color: white;
+      }
+
+      .empty-state {
+        text-align: center;
+        padding: 3rem 1rem;
+        color: var(--text-muted);
+      }
+
+      .empty-state-icon {
+        font-size: 3rem;
+        margin-bottom: 1rem;
+      }
+
+      .back-link {
+        margin-bottom: 1.5rem;
+      }
+
+      .back-link a {
+        color: var(--primary);
+        text-decoration: none;
+        font-weight: 500;
+        font-size: 0.9rem;
+      }
+
+      .back-link a:hover {
+        text-decoration: underline;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="back-link">
+        <a href="index.html">← Back to Translator</a>
+      </div>
+      
+      <h1>📚 Translation History</h1>
+      
+      <div class="history-stats" id="stats">
+        Loading history...
+      </div>
+
+      <div class="history-controls">
+        <input 
+          type="text" 
+          id="search" 
+          class="history-search" 
+          placeholder="Search history..."
+        >
+        <select id="filter" class="history-filter">
+          <option value="all">All Styles</option>
+          <option value="medieval">🏰 Medieval</option>
+          <option value="shakespearean">🎭 Shakespearean</option>
+          <option value="chaucerian">📜 Chaucerian</option>
+          <option value="royal">👑 Royal Decree</option>
+          <option value="bardic">🎵 Bardic</option>
+        </select>
+        <button class="history-btn clear-all-btn" onclick="clearAllHistory()">
+          Clear All
+        </button>
+      </div>
+
+      <div id="historyList">
+        <!-- History items will be inserted here -->
+      </div>
+    </div>
+
+    <footer>
+      Wrought with theatrical flair by <a href="https://github.com/jkfrydendahl" target="_blank">jkfrydendahl</a>
+    </footer>
+
+    <script src="js/history.js"></script>
+    <script>
+      let allItems = [];
+
+      function loadHistory() {
+        allItems = HistoryManager.getAll();
+        updateStats();
+        renderHistory(allItems);
+      }
+
+      function updateStats() {
+        const stats = document.getElementById('stats');
+        const count = allItems.length;
+        
+        if (count === 0) {
+          stats.textContent = 'No translations yet';
+        } else {
+          stats.textContent = `${count} translation${count > 1 ? 's' : ''} saved`;
+        }
+      }
+
+      function renderHistory(items) {
+        const container = document.getElementById('historyList');
+        
+        if (items.length === 0) {
+          container.innerHTML = `
+            <div class="empty-state">
+              <div class="empty-state-icon">📭</div>
+              <p>No history to display.</p>
+              <p style="font-size: 0.9rem; margin-top: 0.5rem;">
+                Translate some text to see it here!
+              </p>
+            </div>
+          `;
+          return;
+        }
+
+        container.innerHTML = items.map(item => `
+          <div class="history-item" data-id="${item.id}">
+            <div class="history-header">
+              <div class="history-type">${HistoryManager.getTypeDisplayName(item.type)}</div>
+              <div class="history-timestamp">${HistoryManager.formatTimestamp(item.timestamp)}</div>
+            </div>
+            ${getParametersText(item.parameters)}
+            <div class="history-content" id="content-${item.id}">
+              ${escapeHtml(item.content)}
+            </div>
+            <div class="history-actions">
+              <button class="history-btn" onclick="toggleExpand(${item.id})">
+                <span id="toggle-${item.id}">Expand</span>
+              </button>
+              <button class="history-btn" onclick="copyToClipboard(${item.id})">
+                Copy
+              </button>
+              <button class="history-btn danger" onclick="deleteItem(${item.id})">
+                Delete
+              </button>
+            </div>
+          </div>
+        `).join('');
+      }
+
+      function getParametersText(params) {
+        if (!params || !params.original) return '';
+        
+        const truncated = params.original.length > 100 
+          ? params.original.substring(0, 100) + '...' 
+          : params.original;
+        
+        return `<div class="history-parameters">"${escapeHtml(truncated)}"</div>`;
+      }
+
+      function escapeHtml(text) {
+        const div = document.createElement('div');
+        div.textContent = text;
+        return div.innerHTML;
+      }
+
+      function toggleExpand(id) {
+        const content = document.getElementById(`content-${id}`);
+        const toggleBtn = document.getElementById(`toggle-${id}`);
+        
+        content.classList.toggle('expanded');
+        toggleBtn.textContent = content.classList.contains('expanded') ? 'Collapse' : 'Expand';
+      }
+
+      function copyToClipboard(id) {
+        const item = allItems.find(i => i.id === id);
+        if (!item) return;
+        
+        navigator.clipboard.writeText(item.content).then(() => {
+          const btn = document.querySelector(`[data-id="${id}"] .history-btn:nth-child(2)`);
+          if (btn) {
+            const original = btn.textContent;
+            btn.textContent = '✓ Copied!';
+            setTimeout(() => { btn.textContent = original; }, 1500);
+          }
+        }).catch(err => {
+          console.error('Failed to copy:', err);
+        });
+      }
+
+      function deleteItem(id) {
+        if (!confirm('Delete this translation from history?')) return;
+        
+        if (HistoryManager.delete(id)) {
+          loadHistory();
+        }
+      }
+
+      function clearAllHistory() {
+        if (!confirm('Are you sure you want to clear ALL history? This cannot be undone.')) return;
+        
+        if (HistoryManager.clearAll()) {
+          loadHistory();
+        }
+      }
+
+      function filterHistory() {
+        const searchTerm = document.getElementById('search').value.toLowerCase();
+        const filterType = document.getElementById('filter').value;
+        
+        let filtered = allItems;
+        
+        // Filter by type
+        if (filterType !== 'all') {
+          filtered = filtered.filter(item => item.type === filterType);
+        }
+        
+        // Filter by search
+        if (searchTerm) {
+          filtered = filtered.filter(item =>
+            item.content.toLowerCase().includes(searchTerm) ||
+            (item.parameters.original && item.parameters.original.toLowerCase().includes(searchTerm))
+          );
+        }
+        
+        renderHistory(filtered);
+      }
+
+      // Event listeners
+      document.getElementById('search').addEventListener('input', filterHistory);
+      document.getElementById('filter').addEventListener('change', filterHistory);
+
+      // Initial load
+      loadHistory();
+    </script>
+  </body>
+</html>

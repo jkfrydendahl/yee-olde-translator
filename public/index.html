@@ -11,6 +11,7 @@
   <div class="container">
     <h1>Ye Olde Translator</h1>
     <p class="subtitle">Transform thy modern speech into dramatic medieval prose!</p>
+    <a href="history.html" class="history-link">📚 View Translation History</a>
 
     <div class="input-group">
       <label for="inputText">Thy Modern Words:</label>
@@ -50,6 +51,7 @@
     Wrought with theatrical flair by <a href="https://github.com/jkfrydendahl" target="_blank">jkfrydendahl</a>
   </footer>
 
+  <script src="js/history.js"></script>
   <script>
     const API_URL = 'https://yee-olde-translator.vercel.app/api/translate';
     
@@ -117,6 +119,9 @@
         lastTranslation = data.translation;
         output.className = 'output';
         output.innerHTML = `<span class="style-tag">${data.style.emoji} ${data.style.name}</span>\n\n${data.translation}`;
+
+        // Save to history
+        HistoryManager.save(style, { style: style, original: text }, data.translation);
 
       } catch (error) {
         showError(error.message || 'Zounds! Something went wrong.');
