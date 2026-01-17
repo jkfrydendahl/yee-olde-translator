@@ -273,10 +273,14 @@
           return;
         }
 
-        container.innerHTML = items.map(item => `
+        container.innerHTML = items.map(item => {
+          const langTag = item.parameters?.language && item.parameters.language !== 'en' 
+            ? ` · ${HistoryManager.getLanguageDisplayName(item.parameters.language)}`
+            : '';
+          return `
           <div class="history-item" data-id="${item.id}">
             <div class="history-header">
-              <div class="history-type">${HistoryManager.getTypeDisplayName(item.type)}</div>
+              <div class="history-type">${HistoryManager.getTypeDisplayName(item.type)}${langTag}</div>
               <div class="history-timestamp">${HistoryManager.formatTimestamp(item.timestamp)}</div>
             </div>
             ${getParametersText(item.parameters)}
@@ -295,7 +299,7 @@
               </button>
             </div>
           </div>
-        `).join('');
+        `}).join('');
       }
 
       function getParametersText(params) {

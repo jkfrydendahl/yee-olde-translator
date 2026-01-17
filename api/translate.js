@@ -6,7 +6,7 @@
  */
 
 import { callOpenAI } from '../lib/openai.js';
-import { buildTranslationPrompt, validateInput, TRANSLATION_STYLES } from '../lib/prompts.js';
+import { buildTranslationPrompt, validateInput, TRANSLATION_STYLES, OUTPUT_LANGUAGES } from '../lib/prompts.js';
 
 // Simple in-memory rate limiting (resets on cold start)
 const rateLimitMap = new Map();
@@ -90,7 +90,7 @@ export default async function handler(req, res) {
   }
 
   try {
-    const { text, style = 'medieval' } = req.body || {};
+    const { text, style = 'medieval', language = 'en' } = req.body || {};
 
     // Validate input
     const validation = validateInput(text);
@@ -110,6 +110,15 @@ export default async function handler(req, res) {
       });
     }
 
+    // Validate language
+    if (!OUTPUT_LANGUAGES[language]) {
+      return res.status(400).json({
+        error: 'Invalid language',
+        message: `Unknown output language. Available languages: ${Object.keys(OUTPUT_LANGUAGES).join(', ')}`,
+        availableLanguages: OUTPUT_LANGUAGES
+      });
+    }
+
     // Check for API key
     if (!process.env.OPENAI_API_KEY) {
       console.error('OPENAI_API_KEY is not configured');
@@ -120,7 +129,7 @@ export default async function handler(req, res) {
     }
 
     // Build prompt and call OpenAI
-    const prompt = buildTranslationPrompt(text.trim(), style);
+    const prompt = buildTranslationPrompt(text.trim(), style, language);
     const translation = await callOpenAI(prompt);
 
     // Return successful response
@@ -131,6 +140,10 @@ export default async function handler(req, res) {
       style: {
         id: style,
         ...TRANSLATION_STYLES[style]
+      },
+      language: {
+        id: language,
+        ...OUTPUT_LANGUAGES[language]
       }
     });
 

@@ -83,6 +83,25 @@ const HistoryManager = {
     return names[type] || type;
   },
 
+  // Get language display name
+  getLanguageDisplayName(lang) {
+    const names = {
+      'en': '🇬🇧 English',
+      'da': '🇩🇰 Danish',
+      'de': '🇩🇪 German',
+      'fr': '🇫🇷 French',
+      'es': '🇪🇸 Spanish',
+      'it': '🇮🇹 Italian',
+      'nl': '🇳🇱 Dutch',
+      'pt': '🇵🇹 Portuguese',
+      'sv': '🇸🇪 Swedish',
+      'no': '🇳🇴 Norwegian',
+      'pl': '🇵🇱 Polish',
+      'ja': '🇯🇵 Japanese'
+    };
+    return names[lang] || lang || '🇬🇧 English';
+  },
+
   // Format timestamp for display
   formatTimestamp(isoString) {
     const date = new Date(isoString);

@@ -34,6 +34,24 @@
       </select>
     </div>
 
+    <div class="input-group">
+      <label for="languageSelect">Output Language:</label>
+      <select id="languageSelect">
+        <option value="en">🇬🇧 English</option>
+        <option value="da">🇩🇰 Danish</option>
+        <option value="de">🇩🇪 German</option>
+        <option value="fr">🇫🇷 French</option>
+        <option value="es">🇪🇸 Spanish</option>
+        <option value="it">🇮🇹 Italian</option>
+        <option value="nl">🇳🇱 Dutch</option>
+        <option value="pt">🇵🇹 Portuguese</option>
+        <option value="sv">🇸🇪 Swedish</option>
+        <option value="no">🇳🇴 Norwegian</option>
+        <option value="pl">🇵🇱 Polish</option>
+        <option value="ja">🇯🇵 Japanese</option>
+      </select>
+    </div>
+
     <button class="btn" id="translateBtn">
       ⚔️ Translate, Forsooth!
     </button>
@@ -58,6 +76,7 @@
     const inputText = document.getElementById('inputText');
     const charCount = document.getElementById('charCount');
     const styleSelect = document.getElementById('styleSelect');
+    const languageSelect = document.getElementById('languageSelect');
     const translateBtn = document.getElementById('translateBtn');
     const outputContainer = document.getElementById('outputContainer');
     const output = document.getElementById('output');
@@ -93,6 +112,7 @@
       }
 
       const style = styleSelect.value;
+      const language = languageSelect.value;
 
       // Show loading state
       translateBtn.disabled = true;
@@ -107,7 +127,7 @@
           headers: {
             'Content-Type': 'application/json',
           },
-          body: JSON.stringify({ text, style }),
+          body: JSON.stringify({ text, style, language }),
         });
 
         const data = await response.json();
@@ -118,10 +138,11 @@
 
         lastTranslation = data.translation;
         output.className = 'output';
-        output.innerHTML = `<span class="style-tag">${data.style.emoji} ${data.style.name}</span>\n\n${data.translation}`;
+        const langTag = language !== 'en' ? ` · ${data.language.emoji} ${data.language.name}` : '';
+        output.innerHTML = `<span class="style-tag">${data.style.emoji} ${data.style.name}${langTag}</span>\n\n${data.translation}`;
 
         // Save to history
-        HistoryManager.save(style, { style: style, original: text }, data.translation);
+        HistoryManager.save(style, { style: style, language: language, original: text }, data.translation);
 
       } catch (error) {
         showError(error.message || 'Zounds! Something went wrong.');
