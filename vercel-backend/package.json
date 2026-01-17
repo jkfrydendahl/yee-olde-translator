@@ -1,8 +1,0 @@
-{
-  "name": "yee-olde-translator-backend",
-  "version": "1.0.0",
-  "description": "Vercel backend for Ye Olde Translator",
-  "dependencies": {
-    "openai": "^4.77.0"
-  }
-}
