@@ -2,8 +2,6 @@
 
 **Ye Olde Translator** is a delightfully unnecessary web app that transforms modern speech into dramatically overwrought pseudo-medieval English. Forsooth.
 
-🌐 **Live:** [yee-olde-translator.vercel.app](https://yee-olde-translator.vercel.app/)
-
 <br>
 
 ---
