@@ -1,6 +1,6 @@
 # 📜 Ye Olde Translator
 
-**Ye Olde Translator** is a delightfully unnecessary web app that transforms modern speech into dramatically overwrought pseudo-medieval English. Forsooth.
+**Ye Olde Translator** is a delightfully unnecessary web app that uses OpenAI to transform modern speech into dramatically overwrought pseudo-medieval prose. Forsooth.
 
 <br>
 
