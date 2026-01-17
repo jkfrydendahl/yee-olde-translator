@@ -130,7 +130,7 @@ export default async function handler(req, res) {
 
     // Build prompt and call OpenAI
     const prompt = buildTranslationPrompt(text.trim(), style, language);
-    const translation = await callOpenAI(prompt);
+    const translation = await callOpenAI(prompt, { originalInput: text.trim() });
 
     // Return successful response
     return res.status(200).json({
