@@ -1,6 +1,6 @@
 {
   "name": "Ye Olde Translator",
-  "short_name": "Ye Olde Translator",
+  "short_name": "Ye Olde Transl.",
   "description": "Transform thy modern speech into dramatic medieval prose!",
   "start_url": "/",
   "display": "standalone",
