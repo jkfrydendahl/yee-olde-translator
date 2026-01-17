@@ -86,20 +86,20 @@ const HistoryManager = {
   // Get language display name
   getLanguageDisplayName(lang) {
     const names = {
-      'en': '🇬🇧 English',
-      'da': '🇩🇰 Danish',
-      'de': '🇩🇪 German',
-      'fr': '🇫🇷 French',
-      'es': '🇪🇸 Spanish',
-      'it': '🇮🇹 Italian',
-      'nl': '🇳🇱 Dutch',
-      'pt': '🇵🇹 Portuguese',
-      'sv': '🇸🇪 Swedish',
-      'no': '🇳🇴 Norwegian',
-      'pl': '🇵🇱 Polish',
-      'ja': '🇯🇵 Japanese'
+      'en': 'English',
+      'da': 'Danish',
+      'de': 'German',
+      'fr': 'French',
+      'es': 'Spanish',
+      'it': 'Italian',
+      'nl': 'Dutch',
+      'pt': 'Portuguese',
+      'sv': 'Swedish',
+      'no': 'Norwegian',
+      'pl': 'Polish',
+      'ja': 'Japanese'
     };
-    return names[lang] || lang || '🇬🇧 English';
+    return names[lang] || lang || 'English';
   },
 
   // Format timestamp for display
