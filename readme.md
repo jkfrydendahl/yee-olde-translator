@@ -124,6 +124,7 @@ Returns all available translation styles.
 - [x] Web UI
 - [x] Copy to clipboard
 - [x] Translation history (localStorage)
+- [x] Multiple language translation
 - [ ] Share translations
 - [ ] Reverse translation (medieval to modern)
 - [ ] Browser extension
