@@ -1,0 +1,25 @@
+{
+  "name": "yee-olde-translator",
+  "version": "1.0.0",
+  "description": "A delightfully unnecessary web app that transforms modern speech into dramatically overwrought pseudo-medieval English. Forsooth.",
+  "main": "api/translate.js",
+  "scripts": {
+    "dev": "vercel dev",
+    "deploy": "vercel --prod"
+  },
+  "keywords": [
+    "medieval",
+    "translator",
+    "openai",
+    "vercel",
+    "serverless"
+  ],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "openai": "^4.77.0"
+  },
+  "devDependencies": {
+    "vercel": "^39.0.0"
+  }
+}
