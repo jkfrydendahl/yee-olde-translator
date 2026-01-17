@@ -310,6 +310,12 @@ footer a:hover {
   color: var(--primary-hover);
 }
 
+#app-version {
+  margin-top: 0.75rem;
+  font-size: 0.7rem;
+  opacity: 0.6;
+}
+
 @media (max-width: 500px) {
   body {
     padding: 1rem 0.75rem;

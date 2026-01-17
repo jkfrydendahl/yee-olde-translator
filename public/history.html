@@ -17,6 +17,13 @@
         flex-wrap: wrap;
       }
 
+      #app-version {
+        margin-top: 1rem;
+        font-size: 0.7rem;
+        color: var(--text-muted);
+        opacity: 0.6;
+      }
+
       .history-search {
         flex: 1;
         min-width: 200px;
@@ -237,6 +244,7 @@
 
     <footer>
       Wrought with theatrical flair by <a href="https://github.com/jkfrydendahl" target="_blank">jkfrydendahl</a>
+      <div id="app-version"></div>
     </footer>
 
     <script src="js/history.js"></script>
@@ -389,6 +397,18 @@
 
       // Initial load
       loadHistory();
+    </script>
+
+    <script>
+      // Bump this whenever you deploy code changes
+      const APP_VERSION = '26.1.17.1';
+      const prev = localStorage.getItem('app-version');
+      if (prev !== APP_VERSION) {
+        localStorage.setItem('app-version', APP_VERSION);
+        // Bust any cached bfcache instance and reload fresh
+        location.replace(location.pathname + location.search + (location.search ? '&' : '?') + 'v=' + APP_VERSION);
+      }
+      document.getElementById('app-version').textContent = `v${APP_VERSION}`;
     </script>
   </body>
 </html>
