@@ -2,56 +2,47 @@
 
 **Ye Olde Translator** is a delightfully unnecessary web app that transforms modern speech into dramatically overwrought pseudo-medieval English. Forsooth.
 
+🌐 **Live:** [yee-olde-translator.vercel.app](https://yee-olde-translator.vercel.app/)
+
 <br>
 
 ---
 
 ## ✨ Features
 
-- 🏰 Transform mundane modern text into grandiose medieval prose
-- 🎭 Multiple translation styles (Shakespearean, Chaucerian, Royal Decree, Bardic)
-- ⚡ Instant translation with AI-powered linguistic theatrics
-- 🎨 Pleasingly archaic user interface
-- 🔒 Rate limiting and input validation for security
+- 🏰 Transform modern text into medieval prose
+- 🎭 Multiple translation styles
+- ⚡ Instant AI-powered translation
+- 📋 Copy to clipboard
+- 🔒 Rate limiting and input validation
 
 <br>
 
 ---
 
-## 🛠️ Installation and Usage
+## 🛠️ Development
 
-Prerequisites:
-- Node.js 18 or newer. Download from https://nodejs.org/
-- OpenAI API Key. More info: https://platform.openai.com/docs/overview
-- Vercel CLI (optional, for local development). Run `npm install -g vercel`
+### Prerequisites
+- Node.js 18+ (For running locally)
+- OpenAI API Key ([platform.openai.com](https://platform.openai.com/))
 
-Installation:
+### Local Development
 ```bash
-# clone this repo
+# Clone and install
 git clone https://github.com/jkfrydendahl/yee-olde-translator.git
 cd yee-olde-translator
-
-# install dependencies
 npm install
-```
 
-Set your OpenAI API key:
-```bash
-# copy the example env file
+# Create .env with your API key
 cp .env.example .env
+# Edit .env and add: OPENAI_API_KEY=your_key_here
 
-# edit .env and add your actual API key
-# IMPORTANT: Never commit .env to git!
+# Run with Vercel CLI
+npx vercel dev
 ```
 
-Run locally:
-```bash
-# using Vercel CLI (recommended)
-npm run dev
-
-# or deploy to Vercel
-npm run deploy
-```
+### Deployment
+The app auto-deploys to Vercel on push to `main`. Set `OPENAI_API_KEY` in Vercel Environment Variables.
 
 <br>
 
@@ -61,19 +52,20 @@ npm run deploy
 
 ```
 yee-olde-translator/
-├── api/                    # Vercel serverless functions
-│   ├── translate.js        # POST /api/translate - Main translation endpoint
-│   └── styles.js           # GET /api/styles - Available translation styles
-├── lib/                    # Shared utilities
+├── api/
+│   ├── translate.js        # POST /api/translate
+│   └── styles.js           # GET /api/styles
+├── lib/
 │   ├── openai.js           # OpenAI client wrapper
-│   └── prompts.js          # Translation prompt templates
-├── public/                 # Static frontend files
-│   └── index.html          # Main page (Phase 3)
-├── .env.example            # Environment variables template
-├── .gitignore              # Git ignore rules (protects secrets!)
-├── package.json            # Project dependencies
-├── vercel.json             # Vercel configuration
-└── readme.md               # You are here
+│   └── prompts.js          # Translation prompts
+├── public/
+│   ├── index.html          # Main page
+│   └── style.css           # Styles
+├── .env.example
+├── .gitignore
+├── package.json
+├── vercel.json
+└── readme.md
 ```
 
 <br>
@@ -131,38 +123,12 @@ Returns all available translation styles.
 - [x] Backend API with OpenAI integration
 - [x] Multiple translation styles
 - [x] Rate limiting & input validation
-- [ ] Web UI (Phase 3)
-- [ ] Copy to clipboard functionality
-- [ ] Translation history
+- [x] Web UI
+- [x] Copy to clipboard
+- [ ] Translation history (localStorage)
 - [ ] Share translations
 - [ ] Reverse translation (medieval to modern)
 - [ ] Browser extension
-
-<br>
-
----
-
-## 📖 Example
-
-**Input:**
-> I'm going to the store to buy some milk.
-
-**Output (Medieval):**
-> Hark! I shall embark upon a most noble quest to the merchant's establishment, whereupon I intend to procure the sacred white elixir of the bovine creature. Verily, 'tis a journey of great import!
-
-**Output (Royal Decree):**
-> Hear ye, hear ye! Be it known unto all that We, in Our infinite wisdom, have decreed a royal expedition unto the marketplace. There, by Our sovereign will, the creamy nectar of the cow shall be acquired for the realm. So it is written, so shall it be done!
-
-<br>
-
----
-
-## 🔒 Security Notes
-
-- **NEVER commit `.env` files** - they contain your API keys!
-- The `.gitignore` file is configured to exclude all sensitive files
-- Rate limiting is enabled to prevent abuse (10 requests/minute)
-- Input validation protects against prompt injection
 
 <br>
 
