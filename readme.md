@@ -22,6 +22,7 @@
 
 ### Prerequisites
 - Node.js 18+ (For running locally)
+- Vercel integration setup
 - OpenAI API Key ([platform.openai.com](https://platform.openai.com/))
 
 ### Local Development
