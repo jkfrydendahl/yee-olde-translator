@@ -1,4 +1,4 @@
-# 📜 Ye Olde Translator
+# Ye Olde Translator
 
 **Ye Olde Translator** is a delightfully unnecessary web app that uses OpenAI to transform modern speech into dramatically overwrought pseudo-medieval prose. Forsooth.
 
@@ -6,13 +6,13 @@
 
 ---
 
-## ✨ Features
+## Features
 
-- 🏰 Transform modern text into medieval prose
-- 🎭 Multiple translation styles
-- ⚡ Instant AI-powered translation
-- 📋 Copy to clipboard
-- 🔒 Rate limiting and input validation
+- Transform modern text into medieval prose
+- Multiple translation styles
+- Instant AI-powered translation
+- Copy to clipboard
+- Rate limiting and input validation
 
 <br>
 
@@ -47,7 +47,7 @@ The app auto-deploys to Vercel on push to `main`. Set `OPENAI_API_KEY` in Vercel
 
 ---
 
-## 📁 Project Structure
+## Project Structure
 
 ```
 yee-olde-translator/
@@ -71,7 +71,7 @@ yee-olde-translator/
 
 ---
 
-## 🔌 API Reference
+## API Reference
 
 ### POST /api/translate
 
@@ -103,11 +103,11 @@ Translate modern text into pseudo-medieval English.
 **Available Styles:**
 | Style | Description |
 |-------|-------------|
-| `medieval` | Generic pseudo-medieval English with thees and thous 🏰 |
-| `shakespearean` | Flowery Elizabethan prose worthy of the Bard 🎭 |
-| `chaucerian` | Middle English style with archaic spellings 📜 |
-| `royal` | Pompous proclamations fit for a monarch 👑 |
-| `bardic` | Dramatic storytelling voice of a traveling bard 🎵 |
+| `medieval` | Generic pseudo-medieval English with thees and thous |
+| `shakespearean` | Flowery Elizabethan prose worthy of the Bard |
+| `chaucerian` | Middle English style with archaic spellings |
+| `royal` | Pompous proclamations fit for a monarch |
+| `bardic` | Dramatic storytelling voice of a traveling bard |
 
 ### GET /api/styles
 
@@ -117,7 +117,7 @@ Returns all available translation styles.
 
 ---
 
-## 🔍 Roadmap
+## Roadmap
 
 - [x] Backend API with OpenAI integration
 - [x] Multiple translation styles
@@ -134,7 +134,7 @@ Returns all available translation styles.
 
 ---
 
-## 🤝 Contributing
+## Contributing
 
 Contributions art most welcome, good traveler! Feel free to submit a pull request or open an issue.
 
@@ -142,6 +142,6 @@ Contributions art most welcome, good traveler! Feel free to submit a pull reques
 
 ---
 
-## 📜 License
+## License
 
 MIT License — do with it as thou wilt.
