@@ -18,7 +18,7 @@
 
 ---
 
-## 🛠️ Development
+## Development
 
 ### Prerequisites
 - Node.js 18+ (For running locally)
