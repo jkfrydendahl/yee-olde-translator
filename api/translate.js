@@ -130,7 +130,7 @@ export default async function handler(req, res) {
 
     // Build prompt and call OpenAI
     const prompt = buildTranslationPrompt(text.trim(), style, language);
-    const translation = await callOpenAI(prompt, { originalInput: text.trim() });
+    const translation = await callOpenAI(prompt);
 
     // Return successful response
     return res.status(200).json({
@@ -151,6 +151,13 @@ export default async function handler(req, res) {
     console.error('Translation error:', error);
 
     // Handle specific OpenAI errors
+    if (error.code === 'translation_truncated') {
+      return res.status(502).json({
+        error: 'Incomplete translation',
+        message: 'The scribes ran out of parchment before finishing. Please try again or shorten thy text.'
+      });
+    }
+
     if (error.code === 'insufficient_quota') {
       return res.status(503).json({
         error: 'Service unavailable',
@@ -172,3 +179,4 @@ export default async function handler(req, res) {
     });
   }
 }
+
